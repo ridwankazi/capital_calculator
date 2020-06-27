@@ -6,7 +6,7 @@ class App extends Component {
         return (
             <div>
                 <h1>
-                    My React App
+                    Capital Calculator
                 </h1>
             </div>
         )
