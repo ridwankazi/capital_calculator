@@ -4,7 +4,7 @@ import Calculator from '@capital/components/Calculator';
 class App extends Component {
     render() {
         return (
-            <div>
+            <div className="App-Container flex-row justify-center">
                 <Calculator />
             </div>
         )

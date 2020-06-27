@@ -1,8 +1,9 @@
 import React, {useState, useMemo} from 'react';
+import './Calculator.less'
 
 const Calculator = ({}) => {
     return(
-        <div style={{width: '10rem', height: '10rem'}}>
+        <div className="Calculator-Box">
             Calculator Box
         </div>
     )
