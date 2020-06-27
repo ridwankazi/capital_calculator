@@ -7,6 +7,11 @@ module.exports = {
         path: path.join(__dirname, '/dist'),
         filename: 'index_bundle.js',
     },
+    resolve: {
+        alias: {
+            '@capital': path.join(__dirname,'src/')
+        }
+    },
     module: {
         rules: [
             {
