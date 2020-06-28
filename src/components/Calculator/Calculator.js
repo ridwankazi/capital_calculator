@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React from 'react';
 import './Calculator.less'
 import ButtonsRow from '@capital/components/ButtonsRow';
 import Display from '@capital/components/Display';
@@ -34,7 +34,12 @@ const Calculator = ({}) => {
             },
         ]
     ]
-    console.log(buttonConfigRowsList)
+    
+    const processButtonClick = (clickEvent, buttonValue) => {
+        console.log(buttonValue)
+    }
+
+
     return(
         <div className="Calculator-Box flex-column">
             <div className="Display">
@@ -42,7 +47,7 @@ const Calculator = ({}) => {
             </div>
             <div className="Buttons flex-column">
                 {buttonConfigRowsList.map( buttonConfigList => (
-                    <ButtonsRow buttonConfigList={buttonConfigList} />
+                    <ButtonsRow buttonConfigList={buttonConfigList} buttonCallBack={processButtonClick} />
                 ))}
             </div>
         </div>
