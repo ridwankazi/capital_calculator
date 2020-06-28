@@ -1,9 +1,8 @@
 import React, {useState, useMemo} from 'react';
 import CapitalButton from '@capital/components/Button';
 const ButtonsRow = ({buttonConfigList}) => {
-    console.log(buttonConfigList)
     return(
-        <div className="Buttons-Row flex-row">
+        <div className="Buttons-Row flex-row justify-space-around">
             {buttonConfigList.map( buttonConfig => (
                 <CapitalButton buttonConfig={buttonConfig} />
             ))}

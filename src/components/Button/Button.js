@@ -1,14 +1,9 @@
 import React, {useState, useMemo} from 'react';
-import { Button } from 'antd';
+import {Button} from 'antd';
+import './Button.less'
 
 const CapitalButton = ({buttonConfig}) => {
-
-    console.log(buttonConfig)
-    return(
-        <div className="Button">
-            <Button type="primary" shape="round">{buttonConfig.value}</Button>
-        </div>
-    )
+    return<Button className="Calc-Button" type="primary" shape="round">{buttonConfig.value}</Button>
 }
 
 export default CapitalButton;
