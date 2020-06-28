@@ -3,6 +3,21 @@ import './Calculator.less'
 import ButtonsRow from '@capital/components/ButtonsRow';
 import Display from '@capital/components/Display';
 
+const operationFunctionMap = {
+    "+": () => {
+        return (a,b) => (a+b)
+    },
+    "-": () => {
+        return (a,b) => (a-b)
+    },
+    "/": () => {
+        return (a,b) => (a/b)
+    },
+    "x": () => {
+        return (a,b) => (a*b)
+    },
+}
+
 const buttonConfigRowsList = [
     [
         {
@@ -43,7 +58,7 @@ const buttonConfigRowsList = [
             value: "6"
         },
         {
-            value: "+"
+            value: "-"
         },
     ],
     [
@@ -75,14 +90,57 @@ const buttonConfigRowsList = [
 
 const Calculator = ({}) => {
 
-    const [runningTotal, setRunningTotal] = useState("0")
+    const [displayValue, setDisplayValue] = useState("0")
+    const [firstOperationArg, setFirstOperationArg] = useState(0)
+    const [currentOperation, setCurrentOperation] = useState(null)
+    const [operationFunction, setOperationFunction] = useState(null)
+
+    console.log("Calculator displayValue", displayValue)
+    console.log("Calculator firstOperationArg", firstOperationArg)
+    console.log("Calculator operationFunction", operationFunction)
+    console.log("\n")
 
     const processButtonClick = (buttonValue) => {
-        console.log(buttonValue)
-        if (runningTotal === "0") {
-            setRunningTotal(buttonValue)
+        console.log("displayValue", displayValue)
+        console.log("firstOperationArg", firstOperationArg)
+        console.log("operationFunction", operationFunction)
+        console.log("buttonValue", buttonValue)
+        console.log("\n")
+        if (displayValue === "0") {
+            setDisplayValue(buttonValue)
+        } else if (!Boolean(Number(buttonValue)) && buttonValue !== "=") {
+            
+            // Operation button is pressed
+            
+            let opFunc = operationFunctionMap[buttonValue]
+            if (currentOperation !== buttonValue) {
+                setOperationFunction(opFunc)
+                setCurrentOperation(buttonValue)
+            }
+
+            if (displayValue !== "0") {
+                if (firstOperationArg && currentOperation === buttonValue) {
+                    let newDisplayValue = operationFunction(firstOperationArg, Number(displayValue))
+                    setFirstOperationArg(Number(newDisplayValue))
+                    setDisplayValue(newDisplayValue)
+                } else {
+                    setFirstOperationArg(Number(displayValue))
+                }
+            }
+
+
+        } else if (buttonValue === "=") {
+            let newDisplayValue = operationFunction(firstOperationArg, Number(displayValue))
+            setFirstOperationArg(Number(newDisplayValue))
+            setDisplayValue(newDisplayValue)
+        } else if (firstOperationArg) {
+            if (Number(displayValue) !== firstOperationArg) {
+                setDisplayValue(displayValue + buttonValue)    
+            } else {
+                setDisplayValue(buttonValue)    
+            }
         } else {
-            setRunningTotal(runningTotal + buttonValue)
+            setDisplayValue(displayValue + buttonValue)
         }
     }
 
@@ -90,7 +148,7 @@ const Calculator = ({}) => {
     return(
         <div className="Calculator-Box flex-column">
             <div className="Display">
-                <Display runningTotal={runningTotal}/>
+                <Display displayValue={displayValue}/>
             </div>
             <div className="Buttons flex-column">
                 {buttonConfigRowsList.map( buttonConfigList => (
