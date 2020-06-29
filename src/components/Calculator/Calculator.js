@@ -2,20 +2,12 @@ import React, {useState} from 'react';
 import './Calculator.less'
 import ButtonsRow from '@capital/components/ButtonsRow';
 import Display from '@capital/components/Display';
-
+import {add, subtract, multiply, divide} from '@capital/operation_support/OperationSupport'
 const operationFunctionMap = {
-    "+": () => {
-        return (a,b) => (a+b)
-    },
-    "-": () => {
-        return (a,b) => (a-b)
-    },
-    "/": () => {
-        return (a,b) => (a/b)
-    },
-    "x": () => {
-        return (a,b) => (a*b)
-    },
+    "+": add,
+    "-": subtract,
+    "/": divide,
+    "x": multiply,
 }
 
 const buttonConfigRowsList = [
@@ -120,7 +112,7 @@ const Calculator = ({}) => {
             let newDisplayValue = String(operationFunction(firstOperationArg, Number(displayValue)))
             setFirstOperationArg(Number(newDisplayValue))
             setDisplayValue(newDisplayValue)
-        } else if (!buttonValueIsNumber && buttonValue !== "=") {
+        } else if (!buttonValueIsNumber) {
             
             let opFunc = operationFunctionMap[buttonValue]
             if (currentOperation !== buttonValue) {
@@ -130,7 +122,7 @@ const Calculator = ({}) => {
 
             if (firstOperationArg && operationFunction && currentOperation === buttonValue) {
                 let newDisplayValue = String(operationFunction(firstOperationArg, Number(displayValue)))
-                setFirstOperationArg(Number(newDisplayValue))
+                setFirstOperationArg(newDisplayValue !== "N/A" ? Number(newDisplayValue):newDisplayValue )
                 setDisplayValue(newDisplayValue)
             } else {
                 setFirstOperationArg(Number(displayValue))
