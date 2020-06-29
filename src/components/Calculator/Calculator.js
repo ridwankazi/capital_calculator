@@ -33,8 +33,9 @@ const Calculator = ({}) => {
 
         let buttonValueIsNumber = buttonValue === BUTTON_VALUE_ZERO ? true : Boolean(Number(buttonValue))
 
-        if (displayValue === BUTTON_VALUE_ZERO && buttonValueIsNumber) {
+        if ((displayValue === BUTTON_VALUE_ZERO || currentOperation === BUTTON_VALUE_EQUAL) && buttonValueIsNumber) {
             setDisplayValue(buttonValue)
+            setCurrentOperation(null)
         } else if (buttonValue === BUTTON_VALUE_CLEAR) {
             setOperationFunction(null)
             setCurrentOperation(null)
@@ -42,7 +43,9 @@ const Calculator = ({}) => {
             setDisplayValue(BUTTON_VALUE_ZERO)
         } else if (buttonValue === BUTTON_VALUE_EQUAL && firstOperationArg && operationFunction) {
             let newDisplayValue = String(operationFunction(firstOperationArg, Number(displayValue)))
-            setFirstOperationArg(Number(newDisplayValue))
+            setOperationFunction(null)
+            setCurrentOperation(BUTTON_VALUE_EQUAL)
+            setFirstOperationArg(0)
             setDisplayValue(newDisplayValue)
         } else if (!buttonValueIsNumber) {
             
@@ -68,7 +71,7 @@ const Calculator = ({}) => {
                 } else {
                     setDisplayValue(buttonValue)    
                 }
-            } else if (buttonValueIsNumber){
+            } else if (buttonValueIsNumber && currentOperation !== BUTTON_VALUE_EQUAL){
                 setDisplayValue(displayValue + buttonValue)
             }
         }
