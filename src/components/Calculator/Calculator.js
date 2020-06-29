@@ -106,9 +106,12 @@ const Calculator = ({}) => {
         console.log("operationFunction", operationFunction)
         console.log("buttonValue", buttonValue)
         console.log("\n")
-        if (displayValue === "0") {
+
+        let buttonValueIsNumber = buttonValue === "0" ? true : Boolean(Number(buttonValue))
+
+        if (displayValue === "0" && buttonValueIsNumber) {
             setDisplayValue(buttonValue)
-        } else if (!Boolean(Number(buttonValue)) && buttonValue !== "=") {
+        } else if (!buttonValueIsNumber && buttonValue !== "=") {
             
             // Operation button is pressed
             
@@ -118,29 +121,29 @@ const Calculator = ({}) => {
                 setCurrentOperation(buttonValue)
             }
 
-            if (displayValue !== "0") {
-                if (firstOperationArg && currentOperation === buttonValue) {
-                    let newDisplayValue = operationFunction(firstOperationArg, Number(displayValue))
-                    setFirstOperationArg(Number(newDisplayValue))
-                    setDisplayValue(newDisplayValue)
-                } else {
-                    setFirstOperationArg(Number(displayValue))
-                }
+            if (firstOperationArg && operationFunction && currentOperation === buttonValue) {
+                let newDisplayValue = String(operationFunction(firstOperationArg, Number(displayValue)))
+                setFirstOperationArg(Number(newDisplayValue))
+                setDisplayValue(newDisplayValue)
+            } else {
+                setFirstOperationArg(Number(displayValue))
             }
 
 
-        } else if (buttonValue === "=") {
-            let newDisplayValue = operationFunction(firstOperationArg, Number(displayValue))
+        } else if (buttonValue === "=" && firstOperationArg && operationFunction) {
+            let newDisplayValue = String(operationFunction(firstOperationArg, Number(displayValue)))
             setFirstOperationArg(Number(newDisplayValue))
             setDisplayValue(newDisplayValue)
-        } else if (firstOperationArg) {
-            if (Number(displayValue) !== firstOperationArg) {
-                setDisplayValue(displayValue + buttonValue)    
-            } else {
-                setDisplayValue(buttonValue)    
-            }
         } else {
-            setDisplayValue(displayValue + buttonValue)
+            if (firstOperationArg) {
+                if (Number(displayValue) !== firstOperationArg) {
+                    setDisplayValue(displayValue + buttonValue)    
+                } else {
+                    setDisplayValue(buttonValue)    
+                }
+            } else if (buttonValueIsNumber){
+                setDisplayValue(displayValue + buttonValue)
+            }
         }
     }
 
