@@ -23,21 +23,6 @@ import {
 const ButtonRowsConfig = [
     [
         {
-            value: BUTTON_VALUE_CLEAR
-        },
-        {
-            value: BUTTON_VALUE_POSITIVE_NEGATIVE
-        },
-        {
-            value: BUTTON_VALUE_PERCENT
-        },
-        {
-            value: BUTTON_VALUE_DIVIDE,
-            operationFunction: divide,
-        },
-    ],
-    [
-        {
             value: BUTTON_VALUE_SEVEN
         },
         {
@@ -86,8 +71,16 @@ const ButtonRowsConfig = [
             value: BUTTON_VALUE_ZERO
         },
         {
+            value: BUTTON_VALUE_CLEAR
+        },
+        {
             value: BUTTON_VALUE_EQUAL
         },
+        {
+            value: BUTTON_VALUE_DIVIDE,
+            operationFunction: divide,
+        },
+
     ]
 ]
 
