@@ -111,9 +111,16 @@ const Calculator = ({}) => {
 
         if (displayValue === "0" && buttonValueIsNumber) {
             setDisplayValue(buttonValue)
+        } else if (buttonValue === "C") {
+            setOperationFunction(null)
+            setCurrentOperation(null)
+            setFirstOperationArg(0)
+            setDisplayValue("0")
+        } else if (buttonValue === "=" && firstOperationArg && operationFunction) {
+            let newDisplayValue = String(operationFunction(firstOperationArg, Number(displayValue)))
+            setFirstOperationArg(Number(newDisplayValue))
+            setDisplayValue(newDisplayValue)
         } else if (!buttonValueIsNumber && buttonValue !== "=") {
-            
-            // Operation button is pressed
             
             let opFunc = operationFunctionMap[buttonValue]
             if (currentOperation !== buttonValue) {
@@ -130,10 +137,6 @@ const Calculator = ({}) => {
             }
 
 
-        } else if (buttonValue === "=" && firstOperationArg && operationFunction) {
-            let newDisplayValue = String(operationFunction(firstOperationArg, Number(displayValue)))
-            setFirstOperationArg(Number(newDisplayValue))
-            setDisplayValue(newDisplayValue)
         } else {
             if (firstOperationArg) {
                 if (Number(displayValue) !== firstOperationArg) {
