@@ -24,13 +24,6 @@ import {
     BUTTON_VALUE_MULTIPLY,
 } from '@capital/Constants'
 
-const operationFunctionMap = {
-    "+": add,
-    "-": subtract,
-    "/": divide,
-    "x": multiply,
-}
-
 const buttonConfigRowsList = [
     [
         {
@@ -104,7 +97,7 @@ const buttonConfigRowsList = [
 
 const Calculator = ({}) => {
 
-    const [displayValue, setDisplayValue] = useState("0")
+    const [displayValue, setDisplayValue] = useState(BUTTON_VALUE_ZERO)
     const [firstOperationArg, setFirstOperationArg] = useState(0)
     const [currentOperation, setCurrentOperation] = useState(null)
     const [operationFunction, setOperationFunction] = useState(null)
@@ -124,16 +117,16 @@ const Calculator = ({}) => {
         console.log("buttonValue", buttonValue)
         console.log("\n")
 
-        let buttonValueIsNumber = buttonValue === "0" ? true : Boolean(Number(buttonValue))
+        let buttonValueIsNumber = buttonValue === BUTTON_VALUE_ZERO ? true : Boolean(Number(buttonValue))
 
-        if (displayValue === "0" && buttonValueIsNumber) {
+        if (displayValue === BUTTON_VALUE_ZERO && buttonValueIsNumber) {
             setDisplayValue(buttonValue)
-        } else if (buttonValue === "C") {
+        } else if (buttonValue === BUTTON_VALUE_CLEAR) {
             setOperationFunction(null)
             setCurrentOperation(null)
             setFirstOperationArg(0)
-            setDisplayValue("0")
-        } else if (buttonValue === "=" && firstOperationArg && operationFunction) {
+            setDisplayValue(BUTTON_VALUE_ZERO)
+        } else if (buttonValue === BUTTON_VALUE_EQUAL && firstOperationArg && operationFunction) {
             let newDisplayValue = String(operationFunction(firstOperationArg, Number(displayValue)))
             setFirstOperationArg(Number(newDisplayValue))
             setDisplayValue(newDisplayValue)
@@ -174,8 +167,8 @@ const Calculator = ({}) => {
                 <Display displayValue={displayValue}/>
             </div>
             <div className="Buttons flex-column">
-                {buttonConfigRowsList.map( buttonConfigList => (
-                    <ButtonsRow buttonConfigList={buttonConfigList} buttonCallBack={processButtonClick} />
+                {buttonConfigRowsList.map( (buttonConfigList, index) => (
+                    <ButtonsRow key={index} buttonConfigList={buttonConfigList} buttonCallBack={processButtonClick} />
                 ))}
             </div>
         </div>
