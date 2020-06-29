@@ -1,0 +1,46 @@
+class Constants {
+
+    static BUTTON_VALUE_ZERO = "0";
+    static BUTTON_VALUE_ONE = "1";
+    static BUTTON_VALUE_TWO = "2";
+    static BUTTON_VALUE_THREE = "3";
+    static BUTTON_VALUE_FOUR = "4";
+    static BUTTON_VALUE_FIVE = "5";
+    static BUTTON_VALUE_SIX = "6";
+    static BUTTON_VALUE_SEVEN = "7";
+    static BUTTON_VALUE_EIGHT = "8";
+    static BUTTON_VALUE_NINE = "9";
+    
+    static BUTTON_VALUE_CLEAR = "C";
+    static BUTTON_VALUE_EQUAL = "=";
+    static BUTTON_VALUE_PERCENT = "%";
+    static BUTTON_VALUE_POSITIVE_NEGATIVE = "+/-";
+    
+    static BUTTON_VALUE_ADD = "+";
+    static BUTTON_VALUE_SUBTRACT = "-";
+    static BUTTON_VALUE_DIVIDE = "/";
+    static BUTTON_VALUE_MULTIPLY = "x";
+
+
+}
+
+export const {
+    BUTTON_VALUE_ZERO,
+    BUTTON_VALUE_ONE,
+    BUTTON_VALUE_TWO,
+    BUTTON_VALUE_THREE,
+    BUTTON_VALUE_FOUR,
+    BUTTON_VALUE_FIVE,
+    BUTTON_VALUE_SIX,
+    BUTTON_VALUE_SEVEN,
+    BUTTON_VALUE_EIGHT,
+    BUTTON_VALUE_NINE,
+    BUTTON_VALUE_CLEAR,
+    BUTTON_VALUE_EQUAL,
+    BUTTON_VALUE_PERCENT,
+    BUTTON_VALUE_POSITIVE_NEGATIVE,
+    BUTTON_VALUE_ADD,
+    BUTTON_VALUE_SUBTRACT,
+    BUTTON_VALUE_DIVIDE,
+    BUTTON_VALUE_MULTIPLY,
+} = Constants;

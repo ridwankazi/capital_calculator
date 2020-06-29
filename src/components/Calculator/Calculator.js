@@ -3,6 +3,27 @@ import './Calculator.less'
 import ButtonsRow from '@capital/components/ButtonsRow';
 import Display from '@capital/components/Display';
 import {add, subtract, multiply, divide} from '@capital/operation_support/OperationSupport'
+import {
+    BUTTON_VALUE_ZERO,
+    BUTTON_VALUE_ONE,
+    BUTTON_VALUE_TWO,
+    BUTTON_VALUE_THREE,
+    BUTTON_VALUE_FOUR,
+    BUTTON_VALUE_FIVE,
+    BUTTON_VALUE_SIX,
+    BUTTON_VALUE_SEVEN,
+    BUTTON_VALUE_EIGHT,
+    BUTTON_VALUE_NINE,
+    BUTTON_VALUE_CLEAR,
+    BUTTON_VALUE_EQUAL,
+    BUTTON_VALUE_PERCENT,
+    BUTTON_VALUE_POSITIVE_NEGATIVE,
+    BUTTON_VALUE_ADD,
+    BUTTON_VALUE_SUBTRACT,
+    BUTTON_VALUE_DIVIDE,
+    BUTTON_VALUE_MULTIPLY,
+} from '@capital/Constants'
+
 const operationFunctionMap = {
     "+": add,
     "-": subtract,
@@ -13,69 +34,70 @@ const operationFunctionMap = {
 const buttonConfigRowsList = [
     [
         {
-            value: "C"
+            value: BUTTON_VALUE_CLEAR
         },
         {
-            value: "+/-"
+            value: BUTTON_VALUE_POSITIVE_NEGATIVE
         },
         {
-            value: "%"
+            value: BUTTON_VALUE_PERCENT
         },
         {
-            value: "/"
-        },
-    ],
-    [
-        {
-            value: "7"
-        },
-        {
-            value: "8"
-        },
-        {
-            value: "9"
-        },
-        {
-            value: "x"
+            value: BUTTON_VALUE_DIVIDE,
+            operationFunction: divide,
         },
     ],
     [
         {
-            value: "4"
+            value: BUTTON_VALUE_SEVEN
         },
         {
-            value: "5"
+            value: BUTTON_VALUE_EIGHT
         },
         {
-            value: "6"
+            value: BUTTON_VALUE_NINE
         },
         {
-            value: "-"
-        },
-    ],
-    [
-        {
-            value: "1"
-        },
-        {
-            value: "2"
-        },
-        {
-            value: "3"
-        },
-        {
-            value: "+"
+            value: BUTTON_VALUE_MULTIPLY,
+            operationFunction: multiply,
         },
     ],
     [
         {
-            value: "0"
+            value: BUTTON_VALUE_FOUR
         },
         {
-            value: "."
+            value: BUTTON_VALUE_FIVE
         },
         {
-            value: "="
+            value: BUTTON_VALUE_SIX
+        },
+        {
+            value: BUTTON_VALUE_SUBTRACT,
+            operationFunction: subtract,
+        },
+    ],
+    [
+        {
+            value: BUTTON_VALUE_ONE
+        },
+        {
+            value: BUTTON_VALUE_TWO
+        },
+        {
+            value: BUTTON_VALUE_THREE
+        },
+        {
+            value: BUTTON_VALUE_ADD,
+            operationFunction: add,
+        },
+    ],
+    [
+        {
+            value: BUTTON_VALUE_ZERO
+        },
+        {
+            value: BUTTON_VALUE_EQUAL
         },
     ]
 ]
@@ -92,7 +114,10 @@ const Calculator = ({}) => {
     console.log("Calculator operationFunction", operationFunction)
     console.log("\n")
 
-    const processButtonClick = (buttonValue) => {
+    const processButtonClick = (buttonConfig) => {
+        const buttonValue = buttonConfig.value
+        const buttonOperationFunction = buttonConfig.operationFunction
+
         console.log("displayValue", displayValue)
         console.log("firstOperationArg", firstOperationArg)
         console.log("operationFunction", operationFunction)
@@ -114,7 +139,7 @@ const Calculator = ({}) => {
             setDisplayValue(newDisplayValue)
         } else if (!buttonValueIsNumber) {
             
-            let opFunc = operationFunctionMap[buttonValue]
+            let opFunc = buttonOperationFunction
             if (currentOperation !== buttonValue) {
                 setOperationFunction(opFunc)
                 setCurrentOperation(buttonValue)
