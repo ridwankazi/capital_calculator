@@ -76,7 +76,7 @@ class Calculator extends React.Component {
                 this.setState(
                     {
                         displayValue: newDisplayValue,
-                        firstOperationArg: newDisplayValue === Infinity ? "N/A":Number(newDisplayValue),
+                        firstOperationArg: newDisplayValue,
                     }
                 )
             } else {
