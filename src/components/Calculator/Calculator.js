@@ -2,93 +2,133 @@ import React, {useState} from 'react';
 import './Calculator.less'
 import ButtonsRow from '@capital/components/ButtonsRow';
 import Display from '@capital/components/Display';
-import ButtonRowsConfig from './ButtonRowsConfig'
+// import ButtonRowsConfig from './ButtonRowsConfig'
 import {
     BUTTON_VALUE_ZERO,
     BUTTON_VALUE_CLEAR,
     BUTTON_VALUE_EQUAL,
 } from '@capital/Constants'
 
-const Calculator = ({buttonRowsConfig=ButtonRowsConfig}) => {
+class Calculator extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            displayValue: BUTTON_VALUE_ZERO,
+            firstOperationArg: 0,
+            currentOperation: null,
+            operationFunction: null,
+        }
+        this.processButtonClick = this.processButtonClick.bind(this)
+    }
 
-    const [displayValue, setDisplayValue] = useState(BUTTON_VALUE_ZERO)
-    const [firstOperationArg, setFirstOperationArg] = useState(0)
-    const [currentOperation, setCurrentOperation] = useState(null)
-    const [operationFunction, setOperationFunction] = useState(null)
-
-    // console.log("Calculator displayValue", displayValue)
-    // console.log("Calculator firstOperationArg", firstOperationArg)
-    // console.log("Calculator operationFunction", operationFunction)
-    // console.log("\n")
-
-    const processButtonClick = (buttonConfig) => {
+    processButtonClick(buttonConfig) {
         const buttonValue = buttonConfig.value
         const buttonOperationFunction = buttonConfig.operationFunction
 
-        // console.log("displayValue", displayValue)
-        // console.log("firstOperationArg", firstOperationArg)
-        // console.log("operationFunction", operationFunction)
-        // console.log("buttonValue", buttonValue)
-        // console.log("\n")
+        console.log("displayValue", this.state.displayValue)
+        console.log("firstOperationArg", this.state.firstOperationArg)
+        console.log("currentOperation", this.state.currentOperation)
+        console.log("operationFunction", this.state.operationFunction)
+        console.log("buttonValue", buttonValue)
+        console.log("\n")
 
         let buttonValueIsNumber = buttonValue === BUTTON_VALUE_ZERO ? true : Boolean(Number(buttonValue))
 
-        if ((displayValue === BUTTON_VALUE_ZERO || currentOperation === BUTTON_VALUE_EQUAL) && buttonValueIsNumber) {
-            setDisplayValue(buttonValue)
-            setCurrentOperation(null)
+        if ((this.state.displayValue === BUTTON_VALUE_ZERO || this.state.currentOperation === BUTTON_VALUE_EQUAL) && buttonValueIsNumber) {
+            this.setState(
+                {
+                    displayValue: buttonValue,
+                    currentOperation: null
+                }
+            )
         } else if (buttonValue === BUTTON_VALUE_CLEAR) {
-            setOperationFunction(null)
-            setCurrentOperation(null)
-            setFirstOperationArg(0)
-            setDisplayValue(BUTTON_VALUE_ZERO)
-        } else if (buttonValue === BUTTON_VALUE_EQUAL && firstOperationArg && operationFunction) {
-            let newDisplayValue = String(operationFunction(firstOperationArg, Number(displayValue)))
-            setOperationFunction(null)
-            setCurrentOperation(BUTTON_VALUE_EQUAL)
-            setFirstOperationArg(0)
-            setDisplayValue(newDisplayValue)
+            this.setState(
+                {
+                    displayValue: BUTTON_VALUE_ZERO,
+                    firstOperationArg: 0,
+                    currentOperation: null,
+                    operationFunction: null
+                }
+            )
+        } else if (buttonValue === BUTTON_VALUE_EQUAL && this.state.firstOperationArg && this.state.operationFunction) {
+            let newDisplayValue = String(this.state.operationFunction(this.state.firstOperationArg, Number(this.state.displayValue)))
+            this.setState(
+                {
+                    displayValue: newDisplayValue,
+                    firstOperationArg: 0,
+                    currentOperation: BUTTON_VALUE_EQUAL,
+                    operationFunction: null
+                }
+            )
         } else if (!buttonValueIsNumber) {
             
             let opFunc = buttonOperationFunction
-            if (currentOperation !== buttonValue) {
-                setOperationFunction(opFunc)
-                setCurrentOperation(buttonValue)
+            if (this.state.currentOperation !== buttonValue) {
+                this.setState(
+                    {
+                        currentOperation: buttonValue,
+                        operationFunction: opFunc()
+                    }
+                )
             }
 
-            if (firstOperationArg && operationFunction && currentOperation === buttonValue) {
-                let newDisplayValue = String(operationFunction(firstOperationArg, Number(displayValue)))
-                setFirstOperationArg(newDisplayValue !== "N/A" ? Number(newDisplayValue):newDisplayValue )
-                setDisplayValue(newDisplayValue)
+            if (this.state.firstOperationArg && this.state.operationFunction && this.state.currentOperation === buttonValue) {
+                let newDisplayValue = String(this.state.operationFunction(this.state.firstOperationArg, Number(this.state.displayValue)))
+                this.setState(
+                    {
+                        displayValue: newDisplayValue,
+                        firstOperationArg: newDisplayValue !== "N/A" ? Number(newDisplayValue):newDisplayValue,
+                    }
+                )
             } else {
-                setFirstOperationArg(Number(displayValue))
+                this.setState(
+                    {
+                        firstOperationArg: Number(this.state.displayValue),
+                    }
+                )
             }
 
 
         } else {
-            if (firstOperationArg) {
-                if (Number(displayValue) !== firstOperationArg) {
-                    setDisplayValue(displayValue + buttonValue)    
+            if (this.state.firstOperationArg) {
+                if (Number(this.state.displayValue) !== this.state.firstOperationArg) {
+                    this.setState(
+                        {
+                            displayValue: this.state.displayValue + buttonValue,
+                        }
+                    )
+                        
                 } else {
-                    setDisplayValue(buttonValue)    
+                    this.setState(
+                        {
+                            displayValue: buttonValue,
+                        }
+                    )
                 }
-            } else if (buttonValueIsNumber && currentOperation !== BUTTON_VALUE_EQUAL){
-                setDisplayValue(displayValue + buttonValue)
+            } else if (buttonValueIsNumber && this.state.currentOperation !== BUTTON_VALUE_EQUAL){
+                this.setState(
+                    {
+                        displayValue: this.state.displayValue + buttonValue,
+                    }
+                )
             }
         }
     }
 
-    return(
-        <div className="Calculator-Box flex-column">
-            <div className="Display-Section">
-                <Display displayValue={displayValue}/>
+    render() {
+        return(
+            <div className="Calculator-Box flex-column">
+                <div className="Display-Section">
+                    <Display displayValue={this.state.displayValue}/>
+                </div>
+                <div className="Buttons-Section flex-column">
+                    {this.props.buttonRowsConfig.map( (buttonConfigList, index) => (
+                        <ButtonsRow key={index} buttonConfigList={buttonConfigList} buttonCallBack={this.processButtonClick} />
+                    ))}
+                </div>
             </div>
-            <div className="Buttons-Section flex-column">
-                {buttonRowsConfig.map( (buttonConfigList, index) => (
-                    <ButtonsRow key={index} buttonConfigList={buttonConfigList} buttonCallBack={processButtonClick} />
-                ))}
-            </div>
-        </div>
-    )
+        )
+    }
 
 }
 
