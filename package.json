@@ -20,6 +20,7 @@
   "homepage": "https://github.com/ridwankazi/capital_calculator#readme",
   "dependencies": {
     "antd": "^4.3.5",
+    "jsdom": "^16.2.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
@@ -44,7 +45,9 @@
     "webpack-dev-server": "^3.11.0"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ],
     "moduleNameMapper": {
       "^@capital(.*)$": "<rootDir>/src$1",
       "\\.(css|less)$": "<rootDir>/src/__mocks__/styleMock.js"

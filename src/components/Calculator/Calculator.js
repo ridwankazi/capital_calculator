@@ -9,27 +9,27 @@ import {
     BUTTON_VALUE_EQUAL,
 } from '@capital/Constants'
 
-const Calculator = ({}) => {
+const Calculator = ({buttonRowsConfig=ButtonRowsConfig}) => {
 
     const [displayValue, setDisplayValue] = useState(BUTTON_VALUE_ZERO)
     const [firstOperationArg, setFirstOperationArg] = useState(0)
     const [currentOperation, setCurrentOperation] = useState(null)
     const [operationFunction, setOperationFunction] = useState(null)
 
-    console.log("Calculator displayValue", displayValue)
-    console.log("Calculator firstOperationArg", firstOperationArg)
-    console.log("Calculator operationFunction", operationFunction)
-    console.log("\n")
+    // console.log("Calculator displayValue", displayValue)
+    // console.log("Calculator firstOperationArg", firstOperationArg)
+    // console.log("Calculator operationFunction", operationFunction)
+    // console.log("\n")
 
     const processButtonClick = (buttonConfig) => {
         const buttonValue = buttonConfig.value
         const buttonOperationFunction = buttonConfig.operationFunction
 
-        console.log("displayValue", displayValue)
-        console.log("firstOperationArg", firstOperationArg)
-        console.log("operationFunction", operationFunction)
-        console.log("buttonValue", buttonValue)
-        console.log("\n")
+        // console.log("displayValue", displayValue)
+        // console.log("firstOperationArg", firstOperationArg)
+        // console.log("operationFunction", operationFunction)
+        // console.log("buttonValue", buttonValue)
+        // console.log("\n")
 
         let buttonValueIsNumber = buttonValue === BUTTON_VALUE_ZERO ? true : Boolean(Number(buttonValue))
 
@@ -77,19 +77,19 @@ const Calculator = ({}) => {
         }
     }
 
-
     return(
         <div className="Calculator-Box flex-column">
-            <div className="Display">
+            <div className="Display-Section">
                 <Display displayValue={displayValue}/>
             </div>
-            <div className="Buttons flex-column">
-                {ButtonRowsConfig.map( (buttonConfigList, index) => (
+            <div className="Buttons-Section flex-column">
+                {buttonRowsConfig.map( (buttonConfigList, index) => (
                     <ButtonsRow key={index} buttonConfigList={buttonConfigList} buttonCallBack={processButtonClick} />
                 ))}
             </div>
         </div>
     )
+
 }
 
 export default Calculator;
