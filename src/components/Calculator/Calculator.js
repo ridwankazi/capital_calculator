@@ -76,7 +76,7 @@ class Calculator extends React.Component {
                 this.setState(
                     {
                         displayValue: newDisplayValue,
-                        firstOperationArg: newDisplayValue,
+                        firstOperationArg: Number(newDisplayValue) && Number(newDisplayValue),
                     }
                 )
             } else {
