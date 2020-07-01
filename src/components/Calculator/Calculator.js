@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import './Calculator.less'
 import ButtonsRow from '@capital/components/ButtonsRow';
 import Display from '@capital/components/Display';
-// import ButtonRowsConfig from './ButtonRowsConfig'
 import {
     BUTTON_VALUE_ZERO,
     BUTTON_VALUE_CLEAR,
@@ -25,12 +24,12 @@ class Calculator extends React.Component {
         const buttonValue = buttonConfig.value
         const buttonOperationFunction = buttonConfig.operationFunction
 
-        console.log("displayValue", this.state.displayValue)
-        console.log("firstOperationArg", this.state.firstOperationArg)
-        console.log("currentOperation", this.state.currentOperation)
-        console.log("operationFunction", this.state.operationFunction)
-        console.log("buttonValue", buttonValue)
-        console.log("\n")
+        // console.log("displayValue", this.state.displayValue)
+        // console.log("firstOperationArg", this.state.firstOperationArg)
+        // console.log("currentOperation", this.state.currentOperation)
+        // console.log("operationFunction", this.state.operationFunction)
+        // console.log("buttonValue", buttonValue)
+        // console.log("\n")
 
         let buttonValueIsNumber = buttonValue === BUTTON_VALUE_ZERO ? true : Boolean(Number(buttonValue))
 
